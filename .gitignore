@@ -1,3 +1,6 @@
 1textmining/*data*
 1textmining/segfile/*
 1textmining/tfidffile/*
+*.py[cod]
+*.sw[po]
+.DS_Store
