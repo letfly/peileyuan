@@ -28,8 +28,8 @@ yy_up = a * xx + (b[1] - a * b[0])
 
 print "w: ", w
 print "a: ", a
-# print "xx:"
 print "support_vectors_: ", clf.support_vectors_
+# coefficent
 print "clf.coef_: ", clf.coef_
 
 # switching to the generic can be 
@@ -41,6 +41,7 @@ pl.plot(xx, yy_up, 'k--')
 
 pl.scatter(clf.support_vectors_[:, 0], clf.support_vectors_[:, 1],
            s=80, facecolors='none')
+# c=Y=>颜色不同,cmap=pl.cm.Paired=>挖空
 pl.scatter(X[:, 0], X[:, 1], c=Y, cmap=pl.cm.Paired)
 
 pl.show()
