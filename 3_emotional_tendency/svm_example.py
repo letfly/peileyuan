@@ -41,7 +41,7 @@ pl.plot(xx, yy_up, 'k--')
 
 pl.scatter(clf.support_vectors_[:, 0], clf.support_vectors_[:, 1],
            s=80, facecolors='none')
-# c=Y=>颜色不同,cmap=pl.cm.Paired=>挖空
+# c=Y=>color is different,cmap=pl.cm.Paired=>cavern
 pl.scatter(X[:, 0], X[:, 1], c=Y, cmap=pl.cm.Paired)
 
 pl.show()
