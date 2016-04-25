@@ -41,7 +41,6 @@ class NeuralNetwork:
 
         for k in xrange(epochs):
             i = np.random.randint(X.shape[0])
-            print self.weights,X,i
             # take the random line in X
             a = [X[i]]
 

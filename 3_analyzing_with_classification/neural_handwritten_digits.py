@@ -21,10 +21,13 @@ nn.fit(X_train, labels_train, epochs=3000)
 predictions = []
 for i in xrange(X_test.shape[0]):
     o = nn.predict(X_test[i])
+    #print 'predict_value',np.argmax(o)
+    #print 'true_value',y_test[i];break
     predictions.append(np.argmax(o))
 print confusion_matrix(y_test, predictions)
 print classification_report(y_test, predictions)
 
 import pylab as pl
-pl.matshow(digits.images[0])
+#pl.matshow(digits.images[0])
+pl.matshow(X_test[0].reshape(8,8))
 pl.show()
