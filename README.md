@@ -9,5 +9,5 @@ Mining Systems是培乐园每节课课后练习代码
 
 Function 功能
 ------
-* textmining
-
+* 1_feature_extraction
+* 2_data_acquisition_and_preprocessiong
