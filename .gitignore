@@ -5,3 +5,4 @@
 *.sw[po]
 .DS_Store
 .ipynb_checkpoints
+*input/
