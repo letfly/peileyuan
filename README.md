@@ -5,7 +5,7 @@ Building Data Mining Systems with Python
 
 Function
 ------
-1. feature_extraction
-2. data_acquisition_and_preprocessiong
-3. analyzing_with_classification
-4. analyzing_with_clustering
+0. feature_extraction
+1. data_acquisition_and_preprocessiong
+2. analyzing_with_classification
+3. analyzing_with_clustering
