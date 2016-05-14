@@ -7,15 +7,16 @@ from operator import itemgetter
 from collections import defaultdict
 
 
-def prepare_arrays_match():
+def run_solution():
     print('Preparing arrays...')
     f = open("../input/train.csv", "r")
     f.readline()
     best_hotels_od_ulc = defaultdict(lambda: defaultdict(int))
     best_hotels_search_dest = defaultdict(lambda: defaultdict(int))
+    best_hotels_search_dest1 = defaultdict(lambda: defaultdict(int))
+    best_hotel_country = defaultdict(lambda: defaultdict(int))
     popular_hotel_cluster = defaultdict(int)
     total = 0
-    count_empty = 0
 
     # Calc counts
     while 1:
@@ -28,8 +29,8 @@ def prepare_arrays_match():
         if line == '':
             break
 
-        # cut the word
         arr = line.split(",")
+        book_year = int(arr[0][:4])
         user_location_city = arr[5]
         orig_destination_distance = arr[6]
         srch_destination_id = arr[16]
@@ -39,25 +40,24 @@ def prepare_arrays_match():
         hotel_cluster = arr[23]
 
         append_1 = 3 + 17*is_booking
+        append_2 = 1 + 5*is_booking
 
-        # user_location_city and orig_destination_distance is not null,record to best_hotels_od_ulc{('user_location_city','orig_destination_distance'): defaultdict(<type 'int'>, {'hotel_cluster': booking_weight})}
         if user_location_city != '' and orig_destination_distance != '':
-            # best_hotels_od_ulc plus (3+17*is_booking) for loop
-            best_hotels_od_ulc[(user_location_city, orig_destination_distance)][hotel_cluster] += append_1
+            best_hotels_od_ulc[(user_location_city, orig_destination_distance)][hotel_cluster] += 1
 
-        # srch_destination_id hotel_country and hotel_market is not null,record to best_hotels_search_desti{('srch_destination_id', 'hotel_country', 'hotel_market'): defaultdict(<type 'int'>, {'hotel_cluster': booking_weight})}
-        if srch_destination_id != '' and hotel_country != '' and hotel_market != '':
+        if srch_destination_id != '' and hotel_country != '' and hotel_market != '' and book_year == 2014:
             best_hotels_search_dest[(srch_destination_id, hotel_country, hotel_market)][hotel_cluster] += append_1
-        else:
-            count_empty += 1
 
-        popular_hotel_cluster[hotel_cluster] += append_1
+        if srch_destination_id != '':
+            best_hotels_search_dest1[srch_destination_id][hotel_cluster] += append_1
+
+        if hotel_country != '':
+            best_hotel_country[hotel_country][hotel_cluster] += append_2
+
+        popular_hotel_cluster[hotel_cluster] += 1
 
     f.close()
-    return best_hotels_od_ulc, best_hotels_search_dest, popular_hotel_cluster
 
-
-def gen_submission(best_hotels_search_dest, best_hotels_od_ulc, popular_hotel_cluster):
     print('Generate submission...')
     now = datetime.datetime.now()
     path = 'submission_' + str(now.strftime("%Y-%m-%d-%H-%M")) + '.csv'
@@ -66,7 +66,6 @@ def gen_submission(best_hotels_search_dest, best_hotels_od_ulc, popular_hotel_cl
     f.readline()
     total = 0
     out.write("id,hotel_cluster\n")
-    # select top 5 from popular_hotel_cluster
     topclasters = nlargest(5, sorted(popular_hotel_cluster.items()), key=itemgetter(1))
 
     while 1:
@@ -90,7 +89,6 @@ def gen_submission(best_hotels_search_dest, best_hotels_od_ulc, popular_hotel_cl
         out.write(str(id) + ',')
         filled = []
 
-        # according location_city, orig_destination_distance about user, to decision the hotel_cluster
         s1 = (user_location_city, orig_destination_distance)
         if s1 in best_hotels_od_ulc:
             d = best_hotels_od_ulc[s1]
@@ -114,8 +112,28 @@ def gen_submission(best_hotels_search_dest, best_hotels_od_ulc, popular_hotel_cl
                     break
                 out.write(' ' + topitems[i][0])
                 filled.append(topitems[i][0])
+        elif srch_destination_id in best_hotels_search_dest1:
+            d = best_hotels_search_dest1[srch_destination_id]
+            topitems = nlargest(5, d.items(), key=itemgetter(1))
+            for i in range(len(topitems)):
+                if topitems[i][0] in filled:
+                    continue
+                if len(filled) == 5:
+                    break
+                out.write(' ' + topitems[i][0])
+                filled.append(topitems[i][0])
 
-        # if the length about filled isn't above 5,claster in topclasters will be filled into the predicted hotel_cluster
+        if hotel_country in best_hotel_country:
+            d = best_hotel_country[hotel_country]
+            topitems = nlargest(5, d.items(), key=itemgetter(1))
+            for i in range(len(topitems)):
+                if topitems[i][0] in filled:
+                    continue
+                if len(filled) == 5:
+                    break
+                out.write(' ' + topitems[i][0])
+                filled.append(topitems[i][0])
+
         for i in range(len(topclasters)):
             if topclasters[i][0] in filled:
                 continue
@@ -128,6 +146,4 @@ def gen_submission(best_hotels_search_dest, best_hotels_od_ulc, popular_hotel_cl
     out.close()
     print('Completed!')
 
-
-best_hotels_od_ulc, best_hotels_search_dest, popular_hotel_cluster = prepare_arrays_match()
-gen_submission(best_hotels_search_dest, best_hotels_od_ulc, popular_hotel_cluster)
+run_solution()
