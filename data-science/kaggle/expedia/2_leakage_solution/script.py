@@ -1,4 +1,4 @@
-# coding: utf-8
+# -*- coding: utf-8 -*-
 __author__ = 'letfly: https://kaggle.com/letfly'
 
 import datetime
