@@ -1,9 +1,7 @@
-Mining Systems
+Mining Scripts
 ======
 
-Building Data Mining Systems with Python
-
-Function
+Procedure
 ------
 0. feature_extraction
 1. data_acquisition_and_preprocessiong
