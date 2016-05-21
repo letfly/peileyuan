@@ -8,12 +8,16 @@ from sklearn.cross_validation import train_test_split
 
 digits = load_digits()
 X = digits.data
+# feature to y
 y = digits.target
+# data process
 X -= X.min()
 X /= X.max()
 
 nn = NeuralNetwork([64, 10, 10], 'logistic')
+# split train to test
 X_train, X_test, y_train, y_test = train_test_split(X, y)
+# transform label which is 3 to 001, 4 to 0001
 labels_train = LabelBinarizer().fit_transform(y_train)
 labels_test = LabelBinarizer().fit_transform(y_test)
 print "start fitting"
