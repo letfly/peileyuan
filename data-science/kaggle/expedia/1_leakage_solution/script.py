@@ -54,10 +54,12 @@ def run_solution():
             out.write('id,hotel_cluster\n')
             topclasters = nlargest(5, sorted(
                 popular_hotel_cluster.items()), key=itemgetter(1))
+            f.readline()
             line = f.readline().strip()
+            total = 0
             while line:
                 total += 1
-                if total % 10000000 == 0:
+                if total % 1000000 == 0:
                     print('Write {} lines...'.format(total))
 
                 arr = line.split(",")
@@ -125,6 +127,7 @@ def run_solution():
                     filled.append(topclasters[i][0])
 
                 out.write("\n")
+                line = f.readline().strip()
     print('Completed!')
 
 run_solution()

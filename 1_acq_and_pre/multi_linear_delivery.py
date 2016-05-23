@@ -1,6 +1,6 @@
 from numpy import genfromtxt
 import numpy as np
-from sklearn import datasets, linear_model
+from sklearn import linear_model
 
 dataPath = 'multi_linear_delivery.csv'
 # get the data to the numpy.array
