@@ -41,11 +41,12 @@ def run_solution():
         hotel_market = arr[22]
         hotel_cluster = arr[23]
 
-        append_1 = 3 + 17*is_booking
-        append_2 = 1 + 5*is_booking
+        append_0 = book_year - 2012
+        append_1 = (3 + 17*is_booking)*append_0
+        append_2 = (1 + 5*is_booking)*append_0
 
         if user_location_city != '' and orig_destination_distance != '':
-            best_hotels_od_ulc[(user_location_city, orig_destination_distance)][hotel_cluster] += 1
+            best_hotels_od_ulc[(user_location_city, orig_destination_distance)][hotel_cluster] += append_0
 
         if srch_destination_id != '' and hotel_country != '' and hotel_market != '' and book_year == 2014:
             best_hotels_search_dest[(srch_destination_id, hotel_country, hotel_market)][hotel_cluster] += append_1
@@ -87,7 +88,7 @@ def run_solution():
 
         arr = line.split(",")
         if validate == 1:
-            book_month = int(arr[0][5:7])
+            book_year = int(arr[0][:4])
             user_location_city = arr[5]
             orig_destination_distance = arr[6]
             user_id = int(arr[7])
@@ -97,7 +98,7 @@ def run_solution():
             hotel_market = arr[22]
             hotel_cluster = arr[23]
             id = 0
-            if user_id % N0 != N1:
+            if user_id % N0 != N1 and book_year == 2013:
                 continue
             if is_booking == 0:
                 continue

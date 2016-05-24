@@ -31,11 +31,12 @@ def run_solution():
             hotel_market = arr[22]
             hotel_cluster = arr[23]
 
-            append_1 = 3 + 17*is_booking
-            append_2 = 1 + 5*is_booking
+            append_0 = book_year - 2012
+            append_1 = (3 + 17*is_booking)*append_0
+            append_2 = (1 + 5*is_booking)*append_0
 
             if user_location_city != '' and orig_destination_distance != '':
-                best_hotels_od_ulc[(user_location_city, orig_destination_distance)][hotel_cluster] += 1
+                best_hotels_od_ulc[(user_location_city, orig_destination_distance)][hotel_cluster] += append_0
             if srch_destination_id != '' and hotel_country != '' and hotel_market != '' and book_year == 2014:
                 best_hotels_search_dest[(srch_destination_id, hotel_country, hotel_market)][hotel_cluster] += append_1
             if srch_destination_id != '':
@@ -96,7 +97,7 @@ def run_solution():
                             break
                         out.write(' ' + topitems[i][0])
                         filled.append(topitems[i][0])
-                elif srch_destination_id in best_hotels_search_dest1:
+                if srch_destination_id in best_hotels_search_dest1:
                     d = best_hotels_search_dest1[srch_destination_id]
                     topitems = nlargest(5, d.items(), key=itemgetter(1))
                     for i in xrange(len(topitems)):
