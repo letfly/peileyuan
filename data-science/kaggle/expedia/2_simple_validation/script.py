@@ -1,4 +1,3 @@
-# coding: utf-8
 import datetime
 from heapq import nlargest
 from operator import itemgetter
@@ -18,10 +17,11 @@ def run_solution():
     best_hotels_search_dest = defaultdict(lambda: defaultdict(int))
     best_hotels_search_dest1 = defaultdict(lambda: defaultdict(int))
     best_hotel_country = defaultdict(lambda: defaultdict(int))
-    popular_hotel_cluster = defaultdict(int)
-    total = 0
     hits = defaultdict(int)
     tp = defaultdict(float)
+
+    popular_hotel_cluster = defaultdict(int)
+    total = 0
 
     # Calc counts
     while 1:
@@ -33,37 +33,29 @@ def run_solution():
             break
         arr = line.split(",")
         book_year = int(arr[0][:4])
-        book_month = int(arr[0][5:7])
         user_location_city = arr[5]
         orig_destination_distance = arr[6]
-        user_id = int(arr[7])
-        is_package = int(arr[9])
         srch_destination_id = arr[16]
         is_booking = int(arr[18])
         hotel_country = arr[21]
         hotel_market = arr[22]
         hotel_cluster = arr[23]
 
-
-        if validate == 1 and user_id % N0 == N1:
-            continue
-
-        append_0 = (book_year - 2012)*12 + book_month
-        append_1 = ((book_year - 2012)*12 + book_month) * (1 + 10*is_booking)
-        append_2 = ((book_year - 2012)*12 + book_month) * (1 + 5*is_booking)
+        append_1 = 3 + 17*is_booking
+        append_2 = 1 + 5*is_booking
 
         if user_location_city != '' and orig_destination_distance != '':
-            best_hotels_od_ulc[(user_location_city, orig_destination_distance)][hotel_cluster] += append_0
+            best_hotels_od_ulc[(user_location_city, orig_destination_distance)][hotel_cluster] += 1
 
-        if srch_destination_id != '' and hotel_country != '' and hotel_market != '' and book_year != '':
-            best_hotels_search_dest[(srch_destination_id, hotel_country, hotel_market,is_package)][hotel_cluster] += append_1
-
+        if srch_destination_id != '' and hotel_country != '' and hotel_market != '' and book_year == 2014:
+            best_hotels_search_dest[(srch_destination_id, hotel_country, hotel_market)][hotel_cluster] += append_1
+        
         if srch_destination_id != '':
             best_hotels_search_dest1[srch_destination_id][hotel_cluster] += append_1
-
+        
         if hotel_country != '':
             best_hotel_country[hotel_country][hotel_cluster] += append_2
-
+        
         popular_hotel_cluster[hotel_cluster] += 1
 
     f.close()
@@ -80,6 +72,7 @@ def run_solution():
     f.readline()
     total = 0
     totalv = 0
+    leak = 0
     out.write("id,hotel_cluster\n")
     topclasters = nlargest(5, sorted(popular_hotel_cluster.items()), key=itemgetter(1))
 
@@ -94,12 +87,10 @@ def run_solution():
 
         arr = line.split(",")
         if validate == 1:
-            book_year = int(arr[0][:4])
             book_month = int(arr[0][5:7])
             user_location_city = arr[5]
             orig_destination_distance = arr[6]
             user_id = int(arr[7])
-            is_package = int(arr[9])
             srch_destination_id = arr[16]
             is_booking = int(arr[18])
             hotel_country = arr[21]
@@ -115,7 +106,6 @@ def run_solution():
             user_location_city = arr[6]
             orig_destination_distance = arr[7]
             user_id = int(arr[8])
-            is_package = int(arr[10])
             srch_destination_id = arr[17]
             hotel_country = arr[20]
             hotel_market = arr[21]
@@ -126,7 +116,9 @@ def run_solution():
         filled = []
 
         s1 = (user_location_city, orig_destination_distance)
+
         if s1 in best_hotels_od_ulc:
+            leak +=1
             d = best_hotels_od_ulc[s1]
             topitems = nlargest(5, sorted(d.items()), key=itemgetter(1))
             for i in range(len(topitems)):
@@ -140,7 +132,7 @@ def run_solution():
                     if topitems[i][0]==hotel_cluster:
                         hits[len(filled)] +=1
 
-        s2 = (srch_destination_id, hotel_country, hotel_market,is_package)
+        s2 = (srch_destination_id, hotel_country, hotel_market)
         if s2 in best_hotels_search_dest:
             d = best_hotels_search_dest[s2]
             topitems = nlargest(5, d.items(), key=itemgetter(1))
@@ -218,6 +210,9 @@ def run_solution():
         print("hits[%%]  %8.2f %8.2f %8.2f %8.2f %8.2f %8.2f " % (tp[1],tp[2],tp[3],tp[4],tp[5],miscp))
         print("----------------------------------------------------------------")
         print("MAP@5 = %8.4f " % (scores*1.0/totalv))
+        print("leakage = %6.2f%%" % (leak*100.0/totalv))
     # <<< validation
+    if validate == 0:
+        print("leakage = %6.2f%%" % (leak*100.0/total))
 
 run_solution()
