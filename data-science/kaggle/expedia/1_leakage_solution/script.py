@@ -36,7 +36,7 @@ def run_solution():
             append_2 = (1 + 5*is_booking)*append_0
 
             if user_location_city != '' and orig_destination_distance != '':
-                best_hotels_od_ulc[(user_location_city, orig_destination_distance)][hotel_cluster] += append_0
+                best_hotels_od_ulc[(user_location_city, orig_destination_distance)][hotel_cluster] += append_0*(1+4*is_booking)
             if srch_destination_id != '' and hotel_country != '' and hotel_market != '' and book_year == 2014:
                 best_hotels_search_dest[(srch_destination_id, hotel_country, hotel_market)][hotel_cluster] += append_1
             if srch_destination_id != '':
