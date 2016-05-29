@@ -10,9 +10,7 @@ import datetime
 from sklearn.ensemble import RandomForestClassifier
 import numpy as np
 import h5py
-import os
 
-os.chdir('D:\Data Science Competitions\Kaggle\Expedia Hotel Recommendations\codes')
 
 def pre_process(data):
     try:

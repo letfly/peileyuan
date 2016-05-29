@@ -13,8 +13,6 @@ import numpy as np
 import h5py
 import os
 
-os.chdir('D:\Data Science Competitions\Kaggle\Expedia Hotel Recommendations\codes')
-
 def map5eval(preds, dtrain):
     actual = dtrain.get_label()
     predicted = preds.argsort(axis=1)[:,-np.arange(5)]

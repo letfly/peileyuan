@@ -11,9 +11,6 @@ __author__ = 'Ravi: https://kaggle.com/company'
 import datetime
 from heapq import nlargest
 from operator import itemgetter
-import os
-
-os.chdir('D:\Data Science Competitions\Kaggle\Expedia Hotel Recommendations\codes')
 
 
 def prepare_arrays_match():
