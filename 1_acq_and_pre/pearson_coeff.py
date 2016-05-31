@@ -1,5 +1,4 @@
 import numpy as np
-from astropy.units import Ybarn
 import math
 
 
