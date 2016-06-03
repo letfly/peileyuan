@@ -1,4 +1,4 @@
-Mining Scripts
+Scripts Of Data Analysis
 ======
 
 Procedure

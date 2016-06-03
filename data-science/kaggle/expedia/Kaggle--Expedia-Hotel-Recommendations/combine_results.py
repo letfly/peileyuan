@@ -6,9 +6,6 @@ Created on Thu May  5 21:17:11 2016
 """
 
 import pandas as pd
-import os
-
-os.chdir('D:\Data Science Competitions\Kaggle\Expedia Hotel Recommendations\codes')
 
 
 match_pred = pd.read_csv('../output/match_pred.csv')

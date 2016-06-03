@@ -14,7 +14,6 @@ import h5py
 import pickle
 import os
 
-os.chdir('D:\Data Science Competitions\Kaggle\Expedia Hotel Recommendations\codes')
 
 cat_col = ['user_id', 'user_location_city',
            'srch_destination_id', 'srch_destination_type_id', 'hotel_continent',

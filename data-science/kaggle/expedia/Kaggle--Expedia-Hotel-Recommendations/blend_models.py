@@ -9,9 +9,7 @@ import pandas as pd
 import numpy as np
 from sklearn.preprocessing import normalize
 import h5py
-import os
 
-os.chdir('D:\Data Science Competitions\Kaggle\Expedia Hotel Recommendations\codes')
 
 submission = pd.read_csv('../input/sample_submission.csv')
 
