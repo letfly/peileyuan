@@ -83,8 +83,6 @@ if __name__ == '__main__':
 		fenci(ff,path)
 	Tfidf(allfile)
 '''
-
-__author__ = "liuxuejiang"
 import jieba
 import jieba.posseg as pseg
 import os
