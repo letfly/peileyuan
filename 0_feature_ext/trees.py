@@ -24,12 +24,12 @@ def calc_shannon_ent(data_set): #O(len(data_set)) #39min27s
         shannon_ent -= prob*log(prob,2)
     return shannon_ent
 
-def split_data_set(data_set, axis, value):
+def split_data_set(data_set, feature, value):
     ret_data_set = []
     for feat_vec in data_set:
-        if feat_vec[axis] == value:
-            reduced_feat_vec = feat_vec[:axis]
-            reduced_feat_vec.extend(feat_vec[axis+1:])
+        if feat_vec[feature] == value:
+            reduced_feat_vec = feat_vec[:feature]
+            reduced_feat_vec.extend(feat_vec[feature+1:])
             ret_data_set.append(reduced_feat_vec)
     return ret_data_set
 
